@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 /*
  * OMT Graphics Example
  * 
- * This example generates a horizontal ticker graphic and ends it via an OMT Sender.
+ * This example generates a horizontal ticker graphic and sends it via an OMT Sender.
  * 
  * This demonstrates the alpha channel functionality built into Open Media Transport.
  * 
