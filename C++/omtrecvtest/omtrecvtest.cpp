@@ -9,7 +9,9 @@ using namespace std;
 
 #include "libomt.h"
 
-
+#ifdef _WIN32
+    #define strcasecmp _stricmp
+#endif
 
 // We will use this to dump info about the incoming OMT
 static int dumpOMTMediaFrameInfo(OMTMediaFrame * video);
@@ -123,7 +125,7 @@ int main(int argc, const char * argv[])
 
 
 
-#define FourCharCodeToString(code) (char[5]){ (code) & 0xFF, ((code) >> 8) & 0xFF, ((code) >> 16) & 0xFF, ((code) >> 24) & 0xFF, 0 }
+#define FourCharCodeToString(code) (code) & 0xFF, ((code) >> 8) & 0xFF, ((code) >> 16) & 0xFF, ((code) >> 24) & 0xFF
 
 static int dumpOMTMediaFrameInfo(OMTMediaFrame * video)
 {
@@ -133,8 +135,8 @@ static int dumpOMTMediaFrameInfo(OMTMediaFrame * video)
         if (video->Type == OMTFrameType_Video)
         {
                 printf("VIDEO FRAME:\n");
-                printf("Timestamp=%llu\n",(unsigned long long) video->Timestamp);
-                printf("Codec=%.4s\n", FourCharCodeToString(video->Codec));
+                printf("Timestamp=%llu\n", (unsigned long long)(video->Timestamp));
+                printf("Codec=%c%c%c%c\n", FourCharCodeToString(video->Codec));
                 printf("Width=%d\n", video->Width);
                 printf("Height=%d\n", video->Height);
                 printf("Stride=%d\n", video->Stride);
@@ -145,7 +147,7 @@ static int dumpOMTMediaFrameInfo(OMTMediaFrame * video)
                 printf("ColorSpace=%d\n", video->ColorSpace);
                 printf("Data=%llu\n", (unsigned long long)video->Data);
                 printf("DataLength=%d\n", video->DataLength);
-                printf("CompressedData=%llu\n",(unsigned long long) video->CompressedData);
+                printf("CompressedData=%llu\n", (unsigned long long)video->CompressedData);
                 printf("CompressedLength=%llu\n", (unsigned long long)video->CompressedLength);
                 printf("FrameMetadata=%llu\n", (unsigned long long)video->FrameMetadata);
                 printf("FrameMetadataLength=%llu\n", (unsigned long long)video->FrameMetadataLength);
@@ -155,7 +157,7 @@ static int dumpOMTMediaFrameInfo(OMTMediaFrame * video)
         {
                 printf("AUDIO FRAME:\n");
                 printf("Timestamp=%llu\n", (unsigned long long)video->Timestamp);
-                printf("Codec=%.4s\n", FourCharCodeToString(video->Codec));
+                printf("Codec=%c%c%c%c\n", FourCharCodeToString(video->Codec));
                 printf("Flags=%d\n", video->Flags);
                 printf("SampleRate=%d\n", video->SampleRate);
                 printf("Channels=%d\n", video->Channels);
